@@ -1,6 +1,6 @@
+/*
 import 'package:dio/dio.dart';
-
-import '../api.dart';
+import 'api.dart';
 
 class DioConfig {
   static final DioConfig _inherentce = DioConfig._init();
@@ -9,7 +9,7 @@ class DioConfig {
 
   Dio createRequest() {
     var dio = Dio(BaseOptions(
-      baseUrl: Urls.baseUrl,
+      baseUrl: Endpoints.baseUrl,
       validateStatus: (int? statusCode) {
         if (statusCode != null && (statusCode >= 100 && statusCode <= 211)) {
           return true;
@@ -27,4 +27,4 @@ class DioConfig {
 
     return dio;
   }
-}
+}*/

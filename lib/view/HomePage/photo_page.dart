@@ -1,19 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:pinterest_clone/Model/photoModel.dart';
 import 'package:pinterest_clone/view/HomePage/widget/homepage_item.dart';
-import '../../Model/PostModel.dart';
-import '../../Model/UserModel.dart';
-import '../../service/user_service.dart';
+import '../../service/photo_service.dart';
+import 'homePage.dart';
 
 class PhotoPage extends StatefulWidget {
    PhotoPage({this.item,Key? key}) : super(key: key);
-   PostModel? item;
+   PhotoModel? item;
   @override
   State<PhotoPage> createState() => _PhotoPageState();
 }
 
 class _PhotoPageState extends State<PhotoPage> {
+
+  final ScrollController _scrollController = ScrollController();
+  List<PhotoModel> photoList = [];
+  int _currentPage = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMoreData();
+    _scrollController.addListener(() {
+      if(_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _loadMoreData();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +44,7 @@ class _PhotoPageState extends State<PhotoPage> {
               // width: MediaQuery.of(context).size.width,
                 child: Stack(
                     children: [
-                      Image.asset(widget.item!.image,fit: BoxFit.cover),
+                      Image.network(widget.item!.urls!.small,fit: BoxFit.cover),
                       //Image.network(widget.item!.image),
                       Positioned(
                         top: 16,
@@ -52,14 +70,14 @@ class _PhotoPageState extends State<PhotoPage> {
                         children: [
                           SizedBox(
                             child: Center(
-                              child: User.userImage != null ? Container(
+                              child: widget.item!.urls!.small != null ? Container(
                                 width: 60.0,
                                 height: 60.0,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     fit: BoxFit.fill,
-                                    image: AssetImage(User.userImage!),
+                                    image: NetworkImage(widget.item!.urls!.small),
                                   ),
                                 ),
                               ) :
@@ -70,7 +88,7 @@ class _PhotoPageState extends State<PhotoPage> {
                                     shape: BoxShape.circle,
                                     color: Colors.orange
                                 ),
-                                child: Text(User.name.substring(0,1)),
+                                child: Text(widget.item!.user.name!.substring(0,1)),
                               ),
                             ),
                           ),
@@ -78,8 +96,8 @@ class _PhotoPageState extends State<PhotoPage> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(User.name,style: TextStyle(fontSize: 20,color: Colors.white),),
-                              Text(User.email,style: TextStyle(fontSize: 12,color: Colors.white),),
+                              Text(widget.item!.user.name!,style: TextStyle(fontSize: 20,color: Colors.white),),
+                              Text(widget.item!.user.name!,style: TextStyle(fontSize: 12,color: Colors.white),),
                             ],
                           ),
                         ],
@@ -110,33 +128,25 @@ class _PhotoPageState extends State<PhotoPage> {
                     SizedBox(height: 10,),
                     SizedBox(
                       height: MediaQuery.of(context).size.height,
-                      child: FutureBuilder(
-                          future: PhotoService.getUsers(),
-                          builder: (context, snapshot){
-                            if(snapshot.hasData){
-                              return MasonryGridView.count(
-                                physics: NeverScrollableScrollPhysics(),
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 4,
-                                crossAxisSpacing: 4,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                    child: HomeItem(
-                                      context,
-                                      postList[index],
-                                    ),
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context)=> PhotoPage(item: postList[index],)));
-                                    },
-                                  );
-                                },
-                              );
-                            } else {
-                              return const Center(
-                                child: Text('No data',),);
-                            }
-                          }),
+                      child: MasonryGridView.count(
+                        physics: NeverScrollableScrollPhysics(),
+                        controller: _scrollController,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 4,
+                        crossAxisSpacing: 4,
+                        itemCount: photoList.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            child: HomeItem(
+                              context,
+                              photoList[index],
+                            ),
+                            onTap: (){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> PhotoPage(item: photoList[index],)));
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 )
@@ -145,6 +155,25 @@ class _PhotoPageState extends State<PhotoPage> {
           ],
         ),
       ),
+    );
+  }
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _loadMoreData() async {
+    var res = await  PhotoService.getPhotos(_currentPage);
+    res.fold((l) {
+      EasyLoading.showError(l);
+    }, (r) {
+      setState(() {
+        photoList.addAll(r);
+        _currentPage++;
+      });
+      return photoList;
+    }
     );
   }
 }

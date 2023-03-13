@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pinterest_clone/homeView.dart';
 import 'package:pinterest_clone/view/HomePage/homePage.dart';
 import 'package:pinterest_clone/view/ProfilPage/ProfilPage.dart';
 import 'package:pinterest_clone/view/SearchPage/seachPage.dart';
@@ -15,7 +16,7 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
 
   var _pages = [
-    HomePage(),
+    HomeView(),
     SearchPage(),
     NotificationPage(),
     ProfilPage(),

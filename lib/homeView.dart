@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pinterest_clone/view/HomePage/MockUps_page/MockUps_Page.dart';
+import 'package:pinterest_clone/view/HomePage/MuteAndPastel_page/MuteAndPastel_Page.dart';
+import 'package:pinterest_clone/view/HomePage/TisTheSeason_page/TisTheSeason_Page.dart';
+import 'package:pinterest_clone/view/HomePage/Yellow%20Rush_page/YellowRush_Page.dart';
 import 'package:pinterest_clone/view/HomePage/homePage.dart';
-import 'package:pinterest_clone/view/HomePage/sportsPage/sportsPage.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,14 +22,15 @@ class _HomeViewState extends State<HomeView>
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 5, vsync: this);
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.tealAccent.shade700,
-        bottom: TabBar(
+        title: TabBar(
+
           //labelStyle: TextStyle(fontSize: 18, color: Colors.black),
           indicatorColor: Colors.black45,
           labelColor: Colors.black,
@@ -38,17 +42,17 @@ class _HomeViewState extends State<HomeView>
               text: 'All',
             ),
             Tab(
-              text: 'Sport',
+              text: 'Yellow Rush',
             ),
-            // Tab(
-            //   text: 'Groups',
-            // ),
-            // Tab(
-            //   text: 'Channels',
-            // ),
-            // Tab(
-            //   text: 'Bots',
-            // ),
+            Tab(
+              text: 'TisTheSeason',
+            ),
+            Tab(
+              text: 'Mute And Pastel',
+            ),
+            Tab(
+              text: 'Mock Ups',
+            ),
           ],
         ),
       ),
@@ -56,10 +60,10 @@ class _HomeViewState extends State<HomeView>
         controller:tabController ,
         children: [
           HomePage(),
-          SportsPage(),
-          // GroupsPage(),
-          // ChannelsPage(),
-          // BotsPage(),
+          YellowRushPage(),
+          MuteAndPastelPage(),
+          TisTheSeasonPage(),
+          MockUpsPage(),
         ],
 
       ),

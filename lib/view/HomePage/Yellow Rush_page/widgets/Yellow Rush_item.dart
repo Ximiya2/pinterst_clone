@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../Model/SearchModel.dart';
+import 'package:pinterest_clone/Model/Yellow RushModel.dart';
 
-Widget SearchItem(BuildContext context, Result post){
+Widget YellowRushItem(BuildContext context, YellowRushModel post){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../Model/SearchModel.dart';
+import 'package:pinterest_clone/Model/Yellow RushModel.dart';
 
-Widget SearchItem(BuildContext context, Result post){
+import '../../../../Model/TisTheSeasonModel.dart';
+
+Widget TisTheSeasonItem(BuildContext context, TisTheSeasonModel post){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       FadeInImage(
-        image: NetworkImage(post.urls != null ? post.urls!.small != null ? post.urls!.small! : 'assets/greyPhoto.jpg' : 'assets/greyPhoto.jpg'),
+        image: NetworkImage(post.urls != null ? (post.urls.small != null ? post.urls.small : 'assets/greyPhoto.jpg') : 'assets/greyPhoto.jpg'),
         placeholder: const AssetImage('assets/greyPhoto.jpg'),
         width: MediaQuery.of(context).size.width,
       ),

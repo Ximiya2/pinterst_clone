@@ -1,7 +1,87 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:pinterest_clone/Model/SearchModel.dart';
+import 'package:pinterest_clone/Model/Yellow RushModel.dart';
+import '../Model/photoModel.dart';
+import '../core/dio/api.dart';
+import '../core/dio/dio_error_exception.dart';
+import 'log_service.dart';
+
+class PhotoService{
+
+  static Future<Either<String,List<PhotoModel>>> getPhotos(int page) async{
+    try{
+      Response response = await Dio().get(
+          '${Endpoints.getPhotos}?page=$page&per_page=10&order_by=ASC',
+          options: Options(headers: {
+            'x-api-key': Endpoints.apiKey,
+            'Authorization': 'Bearer ${Endpoints.token}'
+          })
+      );
+      Log.w(response.statusCode.toString());
+      if(response.statusCode == 200 || response.statusCode == 201){
+        List<PhotoModel> photos = [];
+        for (var e in (response.data as List)) {
+          photos.add(PhotoModel.fromJson(e));
+        }
+        return right(photos);
+      }else{
+        Log.e( DioExceptions.fromDioError(response.data).toString());
+        return left(DioExceptions.fromDioError(response.data).toString());
+      }
+    } on DioError catch (e) {
+      Log.e( e.toString());
+      if(DioExceptions.fromDioError(e).toString() == 'Unauthorized'){
+        return left('Token xatoo');
+      }
+      return left(DioExceptions.fromDioError(e).toString());
+    } catch (m) {
+      Log.e( m.toString());
+      return left(m.toString());
+    }
+  }
+
+  static Future<Either<String,List<Result>>> searchPhotos(
+      {String? search, int? page}) async{
+    try{
+      Response response = await Dio().get(
+          '${Endpoints.searchPhotos}?query=$search&page=$page&per_page=50&order_by=ASC',
+          options: Options(headers: {
+            'x-api-key': Endpoints.apiKey,
+            'Authorization': 'Bearer ${Endpoints.token}'
+          })
+      );
+      Log.w(response.statusCode.toString());
+      if(response.statusCode == 200 || response.statusCode == 201){
+        List<Result> photos = [];
+        for (var e in (response.data['results'] as List)) {
+          photos.add(Result.fromJson(e));
+        }
+        return right(photos);
+      }else{
+        Log.e( DioExceptions.fromDioError(response.data).toString());
+        return left(DioExceptions.fromDioError(response.data).toString());
+      }
+    } on DioError catch (e) {
+      Log.e( e.toString());
+      if(DioExceptions.fromDioError(e).toString() == 'Unauthorized'){
+        return left('Token xatoo');
+      }
+      return left(DioExceptions.fromDioError(e).toString());
+    } catch (m) {
+      Log.e( m.toString());
+      return left(m.toString());
+    }
+  }
+
+
+}
+
+
+/*import 'package:dio/dio.dart';
 import 'package:pinterest_clone/Model/photoModel.dart';
-import '../core/api.dart';
-import '../core/config/doi_config.dart';
+import '../core/dio/api.dart';
+import '../core/dio/doi_config.dart';
 import 'log_service.dart';
 
 class PhotoService {
@@ -12,10 +92,10 @@ class PhotoService {
   static Future<List<PhotoModel>?> getUsers() async {
     try {
       Response res = await DioConfig.inheritentce.createRequest().get(
-          Urls.getPhoto,
+          Endpoints.getPhoto,
           options: Options(headers: {
             "Content-Type": "application/json",
-            "x-api-key": Urls.key
+            "x-api-key": Endpoints.apiKey
           }));
       Log.i(res.data.toString());
       Log.i(res.statusCode.toString());
@@ -44,7 +124,7 @@ class PhotoService {
     return null;
   }
 
-/*
+*//*
 static Future<bool> deleteUser(String id) async {
   try {
     Response res = await DioConfig.inheritentce.createRequest().delete(
@@ -144,7 +224,7 @@ static Future<bool> editUser(UserModel newPost) async {
   }
   // return null;
 }
-*/
+*//*
 
   // static Future<UserModel?> getUserById(int id) async {
   //   try {
@@ -178,5 +258,5 @@ static Future<bool> editUser(UserModel newPost) async {
 
   //
 
-}
+}*/
 
