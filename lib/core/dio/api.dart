@@ -10,7 +10,7 @@ class Endpoints{
   //photos
   static String getPhotos = '${baseUrl}photos?page=1&per_page=30&order_by=ASC';
   static String searchPhotos = '${baseUrl}search/photos';
-  static String CollentionPhotos= '${baseUrl}collections?page=1&per_page=30&order_by=ASC';
+  static String CollentionPhotos= '${baseUrl}collections';
 
 
 }

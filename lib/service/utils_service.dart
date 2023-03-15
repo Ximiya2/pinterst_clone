@@ -17,6 +17,8 @@ class Utils {
         SnackBar(
           behavior: SnackBarBehavior.floating,
           margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-150),
-          content: Text(text), backgroundColor: Colors.green,));
+          content: Text(text),
+          backgroundColor: Colors.green,
+        ));
   }
 }

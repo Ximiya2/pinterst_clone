@@ -47,6 +47,8 @@ class _SearchPageState extends State<SearchPage> {
              }, (r) {
                searchList = r;
                setState(() {});
+               searchList.addAll(r);
+               _currentPage++;
              });
             }
           },
@@ -93,6 +95,7 @@ class _SearchPageState extends State<SearchPage> {
     super.dispose();
   }
 
+/*
   Future<void> _loadMoreData() async {
     var res = await  PhotoService.searchPhotos(page: _currentPage);
     res.fold((l) {
@@ -106,5 +109,6 @@ class _SearchPageState extends State<SearchPage> {
     }
     );
   }
+*/
 }
 

@@ -12,7 +12,7 @@ import 'log_service.dart';
 
 class CollectionsService{
 
-  static Future<Either<String,List<YellowRushModel>>> YellowRushPhotos({int? page}) async{
+  static Future<Either<String,List<PhotoModel>>> YellowRushPhotos({int? page}) async{
     try{
       Response response = await Dio().get(
           '${Endpoints.CollentionPhotos}3326482/photos?page=$page&per_page=30&order_by=ASC',
@@ -23,9 +23,9 @@ class CollectionsService{
       );
       Log.w(response.statusCode.toString());
       if(response.statusCode == 200 || response.statusCode == 201){
-        List<YellowRushModel> photos = [];
+        List<PhotoModel> photos = [];
         for (var e in (response.data as List)) {
-          photos.add(YellowRushModel.fromJson(e));
+          photos.add(PhotoModel.fromJson(e));
         }
         return right(photos);
       }else{

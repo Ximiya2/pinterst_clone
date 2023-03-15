@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pinterest_clone/Model/photoModel.dart';
 
-Widget DownloadItem(BuildContext context, PhotoModel post){
+Widget DownloadItem(BuildContext context, PhotoModel post,void Function() delete){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       FadeInImage(
-        image: NetworkImage(post.urls?.small != null ? post.urls!.small : 'assets/greyPhoto.jpg'),
+        image: NetworkImage(post.urls?.small != null ? post.urls!.small! : 'assets/greyPhoto.jpg'),
         placeholder: AssetImage('assets/greyPhoto.jpg'),
         width: MediaQuery.of(context).size.width,
       ),
@@ -24,6 +24,10 @@ Widget DownloadItem(BuildContext context, PhotoModel post){
               Text(post.likes.toString())
                   : SizedBox(),
             ],
+          ),
+          IconButton(
+            onPressed: delete,
+            icon: Icon(Icons.delete),
           ),
           IconButton(
             onPressed: (){},

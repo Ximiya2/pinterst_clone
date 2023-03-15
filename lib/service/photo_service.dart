@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pinterest_clone/Model/SearchModel.dart';
-import 'package:pinterest_clone/Model/Yellow RushModel.dart';
 import '../Model/photoModel.dart';
 import '../core/dio/api.dart';
 import '../core/dio/dio_error_exception.dart';
@@ -41,8 +40,7 @@ class PhotoService{
     }
   }
 
-  static Future<Either<String,List<Result>>> searchPhotos(
-      {String? search, int? page}) async{
+  static Future<Either<String,List<Result>>> searchPhotos({String? search, int? page}) async{
     try{
       Response response = await Dio().get(
           '${Endpoints.searchPhotos}?query=$search&page=$page&per_page=50&order_by=ASC',

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/Model/Yellow RushModel.dart';
+import 'package:pinterest_clone/Model/photoModel.dart';
 import 'package:pinterest_clone/view/HomePage/Yellow%20Rush_page/widgets/Yellow%20Rush_item.dart';
+import 'package:pinterest_clone/view/HomePage/widget/homepage_item.dart';
 import '../../../service/collenctions_service.dart';
 
 class YellowRushPage extends StatefulWidget {
@@ -16,12 +18,10 @@ class YellowRushPage extends StatefulWidget {
 class _YellowRushPageState extends State<YellowRushPage> {
 
   final ScrollController _scrollController = ScrollController();
-  List<YellowRushModel> photoList = [];
+  List<PhotoModel> photoList = [];
   int _currentPage = 1;
 
-  @override
-  void initState() {
-    super.initState();
+  void initFunc() {
     _loadMoreData();
     _scrollController.addListener(() {
       if(_scrollController.position.pixels ==
@@ -51,7 +51,7 @@ class _YellowRushPageState extends State<YellowRushPage> {
                   crossAxisSpacing: 4,
                   itemCount: photoList.length,
                   itemBuilder: (context, index) {
-                    return YellowRushItem(
+                    return HomeItem(
                       context,
                       photoList[index],
                     );
