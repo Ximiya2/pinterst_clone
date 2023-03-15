@@ -33,38 +33,41 @@ class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       body:
-      Column(
-        children: [
-          Expanded(
-            child: box!.isNotEmpty ? MasonryGridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              // controller: _scrollController,
-              crossAxisCount: 2,
-              mainAxisSpacing: 4,
-              crossAxisSpacing: 4,
-              itemCount: box!.values.length,
-              itemBuilder: (context, index) {
-                return DownloadItem(
-                  context,
-                  box!.getAt(index)!,
-                      (){
-                    box!.delete(index);
-                    setState(() {});
-                  },
-                );
-              },
-            ) : const SizedBox(
-              child: Center(
-                child: Text(
-                    'You haven\`t saved pictures'
+      Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: box!.isNotEmpty ? MasonryGridView.count(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                // controller: _scrollController,
+                crossAxisCount: 2,
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+                itemCount: box!.values.length,
+                itemBuilder: (context, index) {
+                  return DownloadItem(
+                    context,
+                    box!.getAt(index)!,
+                        (){
+                      box!.delete(index);
+                      setState(() {});
+                    },
+                  );
+                },
+              ) : const SizedBox(
+                child: Center(
+                  child: Text(
+                      'You haven\`t saved pictures'
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

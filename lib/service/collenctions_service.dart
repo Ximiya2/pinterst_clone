@@ -8,7 +8,7 @@ import '../Model/TisTheSeasonModel.dart';
 import '../Model/photoModel.dart';
 import '../core/dio/api.dart';
 import '../core/dio/dio_error_exception.dart';
-import 'log_service.dart';
+import 'utils/log_service.dart';
 
 class CollectionsService{
 

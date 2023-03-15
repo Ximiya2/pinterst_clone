@@ -4,7 +4,7 @@ import 'package:pinterest_clone/Model/SearchModel.dart';
 import '../Model/photoModel.dart';
 import '../core/dio/api.dart';
 import '../core/dio/dio_error_exception.dart';
-import 'log_service.dart';
+import 'utils/log_service.dart';
 
 class PhotoService{
 
@@ -40,7 +40,7 @@ class PhotoService{
     }
   }
 
-  static Future<Either<String,List<Result>>> searchPhotos({String? search, int? page}) async{
+  static Future<Either<String,List<PhotoModel>>> searchPhotos({String? search, int? page}) async{
     try{
       Response response = await Dio().get(
           '${Endpoints.searchPhotos}?query=$search&page=$page&per_page=50&order_by=ASC',
@@ -51,9 +51,9 @@ class PhotoService{
       );
       Log.w(response.statusCode.toString());
       if(response.statusCode == 200 || response.statusCode == 201){
-        List<Result> photos = [];
+        List<PhotoModel> photos = [];
         for (var e in (response.data['results'] as List)) {
-          photos.add(Result.fromJson(e));
+          photos.add(PhotoModel.fromJson(e));
         }
         return right(photos);
       }else{

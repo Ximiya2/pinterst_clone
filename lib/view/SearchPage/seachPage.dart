@@ -4,7 +4,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pinterest_clone/view/SearchPage/widgets/seach_Item.dart';
 import '../../Model/SearchModel.dart';
+import '../../Model/photoModel.dart';
 import '../../service/photo_service.dart';
+import '../HomePage/photo_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
 
-  List<Result> searchList = [];
+  List<PhotoModel> searchList = [];
   var searchCtr = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   int _currentPage = 1;
@@ -79,9 +81,14 @@ class _SearchPageState extends State<SearchPage> {
             crossAxisSpacing: 4,
             itemCount: searchList.length,
             itemBuilder: (context, index) {
-              return SearchItem(
-                context,
-                searchList[index],
+              return InkWell(
+                child: SearchItem(
+                  context,
+                  searchList[index],
+                ),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> PhotoPage(item: searchList[index],)));
+                },
               );
             },
           ),

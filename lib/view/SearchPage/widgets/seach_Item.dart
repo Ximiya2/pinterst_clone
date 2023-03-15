@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../Model/SearchModel.dart';
+import '../../../Model/photoModel.dart';
 
-Widget SearchItem(BuildContext context, Result post){
+Widget SearchItem(BuildContext context, PhotoModel post){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

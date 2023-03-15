@@ -25,7 +25,7 @@ class _ProfilPageState extends State<ProfilPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      // backgroundColor: Colors.black87,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -64,10 +64,10 @@ class _ProfilPageState extends State<ProfilPage>
               ),
             ),
             SizedBox(height: 10,),
-            Text(User.name,style: TextStyle(fontSize: 35,color: Colors.white,fontWeight: FontWeight.bold),),
+            Text(User.name,style: TextStyle(fontSize: 35,fontWeight: FontWeight.bold),),
             Text(User.email,style: TextStyle(fontSize: 16,color: Colors.grey,),),
             SizedBox(height: 10,),
-            Text('0 подписчиков - 3 подписки',style: TextStyle(fontSize: 18,color: Colors.white,),),
+            Text('0 подписчиков - 3 подписки',style: TextStyle(fontSize: 18,),),
             SizedBox(height: 40,),
             DefaultTabController(
                 length: 2,
@@ -75,21 +75,21 @@ class _ProfilPageState extends State<ProfilPage>
                   children: [
                     TabBar(
                       controller: tabController,
-                      labelColor: Colors.white,
-                      indicatorColor: Colors.white,
+                      labelColor: Colors.black,
+                      indicatorColor: Colors.black87,
                       tabs: const [
                         Text('Созданные',
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14),),
+                              fontWeight: FontWeight.w500, fontSize: 14, color: Colors.black87),),
                         Text(
                           'Сохранено',
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14),
+                              fontWeight: FontWeight.w500, fontSize: 14,color: Colors.black87),
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.only(right: 10, left: 10, top: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -98,18 +98,18 @@ class _ProfilPageState extends State<ProfilPage>
                             width: MediaQuery.of(context).size.width * 0.74,
                             child: TextFormField(
                               decoration: InputDecoration(
-                                fillColor: Colors.grey.shade700,
+                                fillColor: Colors.grey.shade600,
                                 filled: true,
                                 border: UnderlineInputBorder(
                                     borderRadius: BorderRadius.circular(30)
                                 ),
-                                prefixIcon: const Icon(Icons.search, color: Colors.white,),
+                                prefixIcon: const Icon(Icons.search, color: Colors.black,),
                                 hintText: 'Поиск пинов',
-                                hintStyle: TextStyle(color: Colors.grey),
+                                hintStyle: TextStyle(color: Colors.grey.shade900),
                               ),
                             ),
                           ),
-                          Icon(Icons.add, color: Colors.white,size: 35,),
+                          Icon(Icons.add,size: 35,),
                         ],
                       ),
                     ),//height: MediaQuery.of(context).size.height,

@@ -6,6 +6,7 @@ import 'package:pinterest_clone/Model/photoModel.dart';
 import 'package:pinterest_clone/view/HomePage/widget/homepage_item.dart';
 import '../../core/storage/storage.dart';
 import '../../service/photo_service.dart';
+import '../../service/utils/gallery_saver.dart';
 
 class PhotoPage extends StatefulWidget {
    PhotoPage({this.item,Key? key}) : super(key: key);
@@ -50,7 +51,82 @@ class _PhotoPageState extends State<PhotoPage> {
                       Positioned(
                         top: 16,
                         right: 16,
-                        child:  IconButton(onPressed: (){}, icon: Icon(Icons.more_horiz,color: Colors.white,),)
+                        child:  IconButton(
+                          onPressed: (){
+                            showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              context: context,
+                              builder: (context) => StatefulBuilder(
+                                builder: (BuildContext context, void Function(void Function()) setState) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade800,
+                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
+                                    ),
+                                    height: MediaQuery.of(context).size.height * 0.5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                         Row(
+                                           children: [
+                                             IconButton(
+                                                 onPressed: (){
+                                                   Navigator.pop(context);
+                                                   },
+                                                 icon: const Icon(
+                                                   Icons.cancel_outlined,
+                                                   color: Colors.white,
+                                                 ),
+                                             ),
+                                             SizedBox(width: 20,),
+                                             TextButton(
+                                                 onPressed: (){},
+                                                 child: Text('Options',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                             ),
+                                           ],
+                                         ),
+                                          Divider(thickness: 2,),
+                                          TextButton(
+                                            onPressed: (){},
+                                            child: Text('Unfollow xkamilx',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ),
+                                          TextButton(
+                                            onPressed: (){},
+                                            child: Text('Copy link',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              await saveGallery(widget.item!.urls!.small!);
+                                              },
+                                            child: Text('Download image',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ),
+                                          TextButton(
+                                            onPressed: (){},
+                                            child: Text('Hide Pin',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ),
+                                          TextButton(
+                                            onPressed: (){},
+                                            child: Text('Report Pin',style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ),
+                                          TextButton(
+                                            onPressed: (){},
+                                            child: Text('This goes against Pinterst\`s Community Guidelines', maxLines: 2,style: TextStyle(color: Colors.white,fontSize: 20),),
+                                          ),
+                                        ],
+                                      )
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ]
                 ),

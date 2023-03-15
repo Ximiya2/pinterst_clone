@@ -12,14 +12,14 @@ class _CreatePageState extends State<CreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       body: Center(
         child: Column(
           children: [
             Text('Вдохновляйте других с \n помощью пинов-идей',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              // color: Colors.white,
               fontSize: 20
             ),),
             SizedBox(height: 15,),

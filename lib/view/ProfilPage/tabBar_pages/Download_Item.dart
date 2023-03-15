@@ -27,7 +27,7 @@ Widget DownloadItem(BuildContext context, PhotoModel post,void Function() delete
           ),
           IconButton(
             onPressed: delete,
-            icon: Icon(Icons.delete),
+            icon: Icon(Icons.delete, color: Colors.grey.shade800,),
           ),
           IconButton(
             onPressed: (){},
